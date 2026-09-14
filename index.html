@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ระบบ POS ร้านค้า</title>
+<link rel="icon" type="image/png" href="img/cashier.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com">
+<link rel="preconnect" href="https://lh3.googleusercontent.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="guest">
+
+<!-- ===== เข้าสู่ระบบ ===== -->
+<div id="login">
+  <form class="login-card" id="login-form">
+    <div class="login-brand">
+      <img class="login-logo" src="img/cashier.png" alt="" width="76" height="76">
+      <b>POS</b>
+      <small>ระบบขายหน้าร้าน</small>
+    </div>
+
+    <label class="fld">
+      <span>ชื่อผู้ใช้งาน</span>
+      <div class="fld-wrap">
+        <span class="fld-lead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg></span>
+        <input id="login-username" class="has-lead" autocomplete="username" autocapitalize="off" spellcheck="false">
+      </div>
+    </label>
+    <label class="fld">
+      <span>รหัสผ่าน</span>
+      <div class="fld-wrap">
+        <span class="fld-lead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="9.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>
+        <input id="login-password" class="has-lead" type="password" autocomplete="current-password">
+        <button type="button" id="login-password-toggle" class="pw-eye" aria-label="แสดงรหัสผ่าน" aria-pressed="false">
+          <svg class="pw-eye-show" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>
+          <svg class="pw-eye-hide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.6 6.6A9.9 9.9 0 0 1 12 5.5c6.4 0 10 6.5 10 6.5a17.6 17.6 0 0 1-3.5 4.3M6.2 8.2A17.7 17.7 0 0 0 2 12s3.6 6.5 10 6.5a9.9 9.9 0 0 0 4-.8"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/><path d="M3 3l18 18"/></svg>
+        </button>
+      </div>
+    </label>
+
+    <div class="login-err" id="login-error"></div>
+    <button class="btn-solid btn-block" id="login-btn" type="submit">เข้าสู่ระบบ</button>
+  </form>
+</div>
+
+<!-- ===== ไซด์บาร์ ===== -->
+<div class="nav-scrim" id="nav-scrim"></div>
+<aside class="side" id="side">
+  <div class="side-brand">
+    <img class="brand-logo" src="img/cashier.png" alt="" width="30" height="30">
+    <div class="side-title">
+      <b>POS</b>
+      <small>ระบบขายหน้าร้าน</small>
+    </div>
+  </div>
+
+  <nav class="side-nav" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="pos">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 11.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L21 7H6"/></svg></span>
+      ขายหน้าร้าน
+      <span class="tag" id="cart-tag"></span>
+    </button>
+    <button role="tab" aria-selected="false" data-tab="orders">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6M9 15h3"/></svg></span>
+      ประวัติการขาย
+    </button>
+    <button role="tab" aria-selected="false" data-tab="menu">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3h11a3 3 0 0 1 3 3v15H7a3 3 0 0 1-3-3z"/><path d="M18 8h2v13H7"/><path d="M8 7h6M8 11h6"/></svg></span>
+      เมนูและราคา
+    </button>
+  </nav>
+
+  <div class="side-foot">
+    <div class="me">
+      <span class="me-av" id="me-initial">–</span>
+      <span class="me-info">
+        <b id="me-name">—</b>
+        <small id="me-role">—</small>
+      </span>
+    </div>
+    <button class="side-out" id="logout-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+      ออกจากระบบ
+    </button>
+  </div>
+</aside>
+
+<!-- ===== เนื้อหา ===== -->
+<main class="main">
+  <div class="bar">
+    <button class="hamburger" id="nav-toggle" aria-label="เปิด / ปิดเมนู" aria-expanded="false" aria-controls="side">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+
+    <!-- แท็บหมวดหมู่ของหน้าขาย -->
+    <div class="cats" id="cats"></div>
+
+    <!-- แถบเครื่องมือของอีกสองหน้า -->
+    <div class="bar-tools" id="bar-tools" hidden>
+      <h1 id="page-title">ประวัติการขาย</h1>
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="admin-search" placeholder="ค้นหา" aria-label="ค้นหา">
+      </div>
+      <button class="btn-solid" id="add-menu-btn" hidden>+ เพิ่มเมนู</button>
+    </div>
+  </div>
+
+  <!-- ขายหน้าร้าน -->
+  <section class="view" id="view-pos">
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- ประวัติการขาย -->
+  <section class="view pad" id="view-orders" hidden>
+    <div class="daybar">
+      <button class="day-nav" id="day-prev" type="button" aria-label="วันก่อนหน้า">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>
+      </button>
+      <input type="date" id="day-date" aria-label="เลือกวันที่">
+      <button class="day-nav" id="day-next" type="button" aria-label="วันถัดไป">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg>
+      </button>
+      <button class="btn-line" id="day-today" type="button">วันนี้</button>
+      <span class="daybar-label" id="day-label"></span>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <small id="stat-sales-label">ยอดขายวันนี้</small>
+        <b id="stat-sales">฿0</b>
+      </div>
+      <div class="stat">
+        <small>จำนวนบิล</small>
+        <b id="stat-count">0</b>
+      </div>
+      <div class="stat">
+        <small>เฉลี่ยต่อบิล</small>
+        <b id="stat-avg">฿0</b>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><span id="orders-head">บิลของวันนี้</span> <span class="count" id="orders-count"></span></div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th class="l">เวลา</th>
+              <th class="l">เลขที่บิล</th>
+              <th class="l c-table">โต๊ะ / ลูกค้า</th>
+              <th class="l c-items">รายการ</th>
+              <th>ชำระโดย</th>
+              <th class="r">ยอดรวม</th>
+            </tr>
+          </thead>
+          <tbody id="orders-rows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- เมนูและราคา -->
+  <section class="view pad" id="view-menu" hidden>
+    <div class="panel">
+      <div class="panel-head">รายการเมนู <span class="count" id="menu-count"></span></div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th class="c-img">รูป</th>
+              <th class="l">ชื่อเมนู</th>
+              <th class="l c-cat">หมวดหมู่</th>
+              <th class="r">ราคา</th>
+              <th>สถานะ</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="menu-rows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===== แผงบิล ===== -->
+<aside class="bill" id="bill">
+  <div class="bill-top">
+    <span class="bill-where">ในร้าน •</span>
+    <input id="table-no" placeholder="ระบุโต๊ะ / ชื่อลูกค้า" aria-label="โต๊ะ / ชื่อลูกค้า">
+    <button type="button" class="bill-clear" id="clear-cart-btn" disabled>ล้างบิล</button>
+  </div>
+
+  <div class="bill-card">
+    <div class="bill-items" id="bill-items"></div>
+
+    <div class="bill-sum" id="bill-sum" hidden>
+      <div><span>ยอดก่อนภาษี</span><b id="sum-net">฿0</b></div>
+      <div><span>ภาษีมูลค่าเพิ่ม (7%)</span><b id="sum-vat">฿0</b></div>
+      <div class="sum-note">ราคาเมนูรวมภาษีมูลค่าเพิ่มแล้ว</div>
+    </div>
+  </div>
+
+  <div class="bill-foot">
+    <div class="bill-pay" id="bill-pay">
+      <button type="button" data-pay="เงินสด" class="on">เงินสด</button>
+      <button type="button" data-pay="โอนเงิน">โอนเงิน</button>
+    </div>
+    <button class="btn-solid btn-pay" id="checkout-btn" disabled>ชำระเงิน ฿0</button>
+  </div>
+</aside>
+
+<!-- ===== เพิ่ม / แก้ไขเมนู ===== -->
+<div class="scrim" id="menu-modal">
+  <div class="dlg">
+    <div class="dlg-head">
+      <b id="menu-modal-title">เพิ่มเมนู</b>
+      <button class="x" data-close="menu-modal" aria-label="ปิด">✕</button>
+    </div>
+    <form class="dlg-body" id="menu-form">
+      <input type="hidden" id="menu-id">
+      <label class="fld"><span>ชื่อเมนู</span><input id="menu-name" placeholder="เช่น ชาไทยเย็น"></label>
+      <div class="fld-2">
+        <label class="fld"><span>หมวดหมู่</span><input id="menu-category" list="cat-options" placeholder="เช่น เครื่องดื่ม"><datalist id="cat-options"></datalist></label>
+        <label class="fld"><span>ราคา (บาท)</span><input id="menu-price" type="number" min="0" step="0.01" placeholder="45"></label>
+      </div>
+      <div class="fld">
+        <span>รูปภาพเมนู</span>
+        <div class="pic">
+          <div class="pic-box" id="image-preview">ไม่มีรูป</div>
+          <div class="pic-act">
+            <input id="menu-image-input" type="file" accept="image/*" hidden>
+            <button type="button" class="btn-line" id="pick-image-btn">เลือกรูป</button>
+            <button type="button" class="btn-line" id="clear-image-btn" hidden>เอารูปออก</button>
+          </div>
+        </div>
+      </div>
+      <div class="dlg-foot">
+        <button type="button" class="btn-line" data-close="menu-modal">ยกเลิก</button>
+        <button type="submit" class="btn-solid" id="menu-save-btn">บันทึกเมนู</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== ยืนยันการลบเมนู ===== -->
+<div class="scrim" id="delete-modal">
+  <div class="dlg dlg-sm">
+    <div class="dlg-head">
+      <b>ลบเมนู</b>
+      <button class="x" data-close="delete-modal" aria-label="ปิด">✕</button>
+    </div>
+    <div class="dlg-body">
+      <p class="dlg-msg">ต้องการลบ “<b id="delete-name"></b>” ออกจากระบบใช่หรือไม่<br>เมนูที่ลบแล้วจะกู้คืนไม่ได้</p>
+      <div class="dlg-foot">
+        <button type="button" class="btn-line" data-close="delete-modal">ยกเลิก</button>
+        <button type="button" class="btn-danger" id="delete-confirm-btn">ลบเมนู</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="api.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
