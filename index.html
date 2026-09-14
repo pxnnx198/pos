@@ -189,8 +189,8 @@
 <!-- ===== แผงบิล ===== -->
 <aside class="bill" id="bill">
   <div class="bill-top">
-    <span class="bill-where">ในร้าน •</span>
-    <input id="table-no" placeholder="ระบุโต๊ะ / ชื่อลูกค้า" aria-label="โต๊ะ / ชื่อลูกค้า">
+    <span class="bill-where">ใบเสร็จ •</span>
+    <input id="table-no" placeholder="ชื่อลูกค้า" aria-label="ชื่อลูกค้า">
     <button type="button" class="bill-clear" id="clear-cart-btn" disabled>ล้างบิล</button>
   </div>
 
@@ -217,18 +217,18 @@
 <div class="scrim" id="menu-modal">
   <div class="dlg">
     <div class="dlg-head">
-      <b id="menu-modal-title">เพิ่มเมนู</b>
+      <b id="menu-modal-title">เพิ่มสินค้า</b>
       <button class="x" data-close="menu-modal" aria-label="ปิด">✕</button>
     </div>
     <form class="dlg-body" id="menu-form">
       <input type="hidden" id="menu-id">
-      <label class="fld"><span>ชื่อเมนู</span><input id="menu-name" placeholder="เช่น ชาไทยเย็น"></label>
+      <label class="fld"><span>ชื่อรายการสินค้า</span><input id="menu-name" placeholder="เช่น ชาไทยเย็น"></label>
       <div class="fld-2">
         <label class="fld"><span>หมวดหมู่</span><input id="menu-category" list="cat-options" placeholder="เช่น เครื่องดื่ม"><datalist id="cat-options"></datalist></label>
         <label class="fld"><span>ราคา (บาท)</span><input id="menu-price" type="number" min="0" step="0.01" placeholder="45"></label>
       </div>
       <div class="fld">
-        <span>รูปภาพเมนู</span>
+        <span>รูปภาพสินค้า</span>
         <div class="pic">
           <div class="pic-box" id="image-preview">ไม่มีรูป</div>
           <div class="pic-act">
@@ -250,14 +250,14 @@
 <div class="scrim" id="delete-modal">
   <div class="dlg dlg-sm">
     <div class="dlg-head">
-      <b>ลบเมนู</b>
+      <b>ลบ</b>
       <button class="x" data-close="delete-modal" aria-label="ปิด">✕</button>
     </div>
     <div class="dlg-body">
-      <p class="dlg-msg">ต้องการลบ “<b id="delete-name"></b>” ออกจากระบบใช่หรือไม่<br>เมนูที่ลบแล้วจะกู้คืนไม่ได้</p>
+      <p class="dlg-msg">ต้องการลบ “<b id="delete-name"></b>” ออกจากระบบใช่หรือไม่<br>รายการที่ลบแล้วจะกู้คืนไม่ได้</p>
       <div class="dlg-foot">
         <button type="button" class="btn-line" data-close="delete-modal">ยกเลิก</button>
-        <button type="button" class="btn-danger" id="delete-confirm-btn">ลบเมนู</button>
+        <button type="button" class="btn-danger" id="delete-confirm-btn">ลบ</button>
       </div>
     </div>
   </div>
